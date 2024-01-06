@@ -1,3 +1,26 @@
+// MIT License
+//
+// Copyright (c) 2018 warrensbox
+// Copyright (c) 2024 Ryan Parman <https://ryanparman.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package lib
 
 import (
@@ -5,9 +28,8 @@ import (
 	"os"
 )
 
-//CreateSymlink : create symlink
+// CreateSymlink : create symlink
 func CreateSymlink(cwd string, dir string) {
-
 	err := os.Symlink(cwd, dir)
 	if err != nil {
 		log.Fatalf(`
@@ -21,9 +43,8 @@ func CreateSymlink(cwd string, dir string) {
 	}
 }
 
-//RemoveSymlink : remove symlink
+// RemoveSymlink : remove symlink
 func RemoveSymlink(symlinkPath string) {
-
 	_, err := os.Lstat(symlinkPath)
 	if err != nil {
 		log.Fatalf(`
@@ -52,7 +73,6 @@ func RemoveSymlink(symlinkPath string) {
 
 // CheckSymlink : check file is symlink
 func CheckSymlink(symlinkPath string) bool {
-
 	fi, err := os.Lstat(symlinkPath)
 	if err != nil {
 		return false
@@ -67,8 +87,7 @@ func CheckSymlink(symlinkPath string) bool {
 
 // ChangeSymlink : move symlink to existing binary
 func ChangeSymlink(binVersionPath string, binPath string) {
-
-	//installLocation = GetInstallLocation() //get installation location -  this is where we will put our terraform binary file
+	// installLocation = GetInstallLocation() //get installation location -  this is where we will put our terraform binary file
 	binPath = InstallableBinLocation(binPath)
 
 	/* remove current symlink if exist*/
@@ -79,5 +98,4 @@ func ChangeSymlink(binVersionPath string, binPath string) {
 
 	/* set symlink to desired version */
 	CreateSymlink(binVersionPath, binPath)
-
 }

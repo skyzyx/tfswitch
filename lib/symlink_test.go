@@ -1,3 +1,26 @@
+// MIT License
+//
+// Copyright (c) 2018 warrensbox
+// Copyright (c) 2024 Ryan Parman <https://ryanparman.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package lib_test
 
 import (
@@ -7,13 +30,12 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/warrensbox/terraform-switcher/lib"
+	"github.com/skyzyx/tfswitch/lib"
 )
 
 // TestCreateSymlink : check if symlink exist-remove if exist,
 // create symlink, check if symlink exist, remove symlink
 func TestCreateSymlink(t *testing.T) {
-
 	testSymlinkSrc := "/test-tfswitcher-src"
 
 	testSymlinkDest := "/test-tfswitcher-dest"
@@ -51,7 +73,6 @@ func TestCreateSymlink(t *testing.T) {
 // TestRemoveSymlink : check if symlink exist-create if does not exist,
 // remove symlink, check if symlink exist
 func TestRemoveSymlink(t *testing.T) {
-
 	testSymlinkSrc := "/test-tfswitcher-src"
 
 	testSymlinkDest := "/test-tfswitcher-dest"
@@ -86,7 +107,6 @@ func TestRemoveSymlink(t *testing.T) {
 
 // TestCheckSymlink : Create symlink, test if file is symlink
 func TestCheckSymlink(t *testing.T) {
-
 	testSymlinkSrc := "/test-tgshifter-src"
 
 	testSymlinkDest := "/test-tgshifter-dest"

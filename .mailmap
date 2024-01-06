@@ -1,0 +1,63 @@
+# This file allows mapping several author and committer email addresses and
+# names to a single canonical one for `git shortlog`, `git log --author`,
+# or `git check-mailmap`.
+#
+# For example, if you commit as `random.person@example.com` but sometimes use
+# "Rañdom Person" and sometimes "Random Person" as name and you want the former
+# to be your canonical name, add
+#
+#     Rañdom Person <random.person@example.com>
+#
+# If you commit as both `random.person@example.com` and `ranp@example.com` and
+# you want the former to be your canonical email address, add
+#
+#     <random.person@example.com> <ranp@example.com>
+#
+# Combinations of both are possible too, see
+# https://git-scm.com/docs/gitmailmap for format details.
+#
+# You can commit changes for your own names and email addresses without review.
+# If you want to add entries for other people, please have them review the
+# addition.
+#
+# Please keep this file sorted.
+
+Alexander Leinoff <ajjleinoff@gmail.com>
+Andreas Prang <a@pra.ng>
+Anthony Freyermuth <anthony.freyermuth@agregio-edf.com> <56300858+afreyermuth98@users.noreply.github.com>
+Anthony Freyermuth <anthony.freyermuth@agregio-edf.com> anthony.freyermuth <anthony.freyermuth@agregio-edf.com>
+Bryan Bishop <bryan.bishop@pearson.com>
+Chris Gruel <chris_gruel@homedepot.com>
+Chris Pruitt <chris.pruitt15@gmail.com>
+Dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Erik Weathers <erikdw@gmail.com>
+Fabiano V. Santos <santos.fabianov@gmail.com>
+George L. Yermulnik <yz@yz.kiev.ua>
+Hugues Lepesant <hugues.lepesant@fr.clara.net> <hlepesant@users.noreply.github.com>
+Isaac Wilson <10012479+Jukie@users.noreply.github.com>
+Karol Pucynski <kpucynski@gmail.com>
+Marcus Noble <m.noble@elsevier.com>
+Mark Keisler <mark@mitsein.net>
+Micah Flatt <micah.flatt@getbuilt.com>
+Mike Deeks <mike.deeks@instacart.com>
+Richard Seldon <arcseldon@hotmail.com>
+Robert Blumen <rblumen@salesforce.com>
+Robert Williams <robertwilliams1985@gmail.com>
+Roman <pertsev.roman@gmail.com>
+Rüdiger Block <ruediger.block@gmx.de>
+Ryan Parman <ryan@ryanparman.com>
+Sebastian Kunze <mail@sebastiankunze.de>
+Shaun Mouton <sdmouton@devops.christmas>
+Sivaram Sajeev <sivaramsajeev@gmail.com> <44951806+sivaramsajeev@users.noreply.github.com>
+Tim Krueger <t@timkrueger.me>
+Warren Veerasingam <warren.veerasingam@gmail.com> <38867521+warren-veerasingam@users.noreply.github.com>
+Warren Veerasingam <warren.veerasingam@gmail.com> <38867521+warrensbox@users.noreply.github.com>
+Warren Veerasingam <warren.veerasingam@gmail.com> <warren.veerasingam@pearson.com>
+Warren Veerasingam <warren.veerasingam@gmail.com> <warrenveerasingam@Warrens-MacBook-Pro-6.local>
+Warren Veerasingam <warren.veerasingam@gmail.com> warren-veerasingam <warren.veerasingam@gmail.com>
+Warren Veerasingam <warren.veerasingam@gmail.com> warren.veerasingam <warren.veerasingam@gmail.com>
+Warren Veerasingam <warren.veerasingam@gmail.com> warren.veerasingam@gmail.com <warren.veerasingam@gmail.com>
+Warren Veerasingam <warren.veerasingam@gmail.com> warrenbox <warren.veerasingam@gmail.com>
+Warren Veerasingam <warren.veerasingam@gmail.com> warrensbox <warren.veerasingam@gmail.com>
+Warren Veerasingam <warren.veerasingam@gmail.com> WarrenVeerasingam <warren.veerasingam@gmail.com>
+叶泽宇 <shuliyey@126.com>

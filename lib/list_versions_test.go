@@ -1,3 +1,26 @@
+// MIT License
+//
+// Copyright (c) 2018 warrensbox
+// Copyright (c) 2024 Ryan Parman <https://ryanparman.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package lib_test
 
 import (
@@ -5,7 +28,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/warrensbox/terraform-switcher/lib"
+	"github.com/skyzyx/tfswitch/lib"
 )
 
 const (
@@ -14,7 +37,6 @@ const (
 
 // TestGetTFList : Get list from hashicorp
 func TestGetTFList(t *testing.T) {
-
 	listAll := true
 	list, _ := lib.GetTFList(hashiURL, listAll)
 
@@ -37,12 +59,10 @@ func TestGetTFList(t *testing.T) {
 	} else {
 		t.Log("Write versions exist (expected)")
 	}
-
 }
 
-//TestRemoveDuplicateVersions :  test to removed duplicate
+// TestRemoveDuplicateVersions :  test to removed duplicate
 func TestRemoveDuplicateVersions(t *testing.T) {
-
 	test_array := []string{"0.0.1", "0.0.2", "0.0.3", "0.0.1", "0.12.0-beta1", "0.12.0-beta1"}
 
 	list := lib.RemoveDuplicateVersions(test_array)
@@ -54,10 +74,9 @@ func TestRemoveDuplicateVersions(t *testing.T) {
 	}
 }
 
-//TestValidVersionFormat : test if func returns valid version format
+// TestValidVersionFormat : test if func returns valid version format
 // more regex testing at https://rubular.com/r/UvWXui7EU2icSb
 func TestValidVersionFormat(t *testing.T) {
-
 	var version string
 	version = "0.11.8"
 
@@ -148,5 +167,4 @@ func TestValidVersionFormat(t *testing.T) {
 	} else {
 		log.Fatalf("Failed to verify version format: %s\n", version)
 	}
-
 }

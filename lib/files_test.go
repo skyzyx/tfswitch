@@ -1,3 +1,26 @@
+// MIT License
+//
+// Copyright (c) 2018 warrensbox
+// Copyright (c) 2024 Ryan Parman <https://ryanparman.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package lib_test
 
 import (
@@ -15,7 +38,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/warrensbox/terraform-switcher/lib"
+	"github.com/skyzyx/tfswitch/lib"
 )
 
 // TestRenameFile : Create a file, check filename exist,
@@ -171,12 +194,12 @@ func TestCreateDirIfNotExist(t *testing.T) {
 	cleanUp(installLocation)
 }
 
-//TestWriteLines : write to file, check readline to verify
+// TestWriteLines : write to file, check readline to verify
 func TestWriteLines(t *testing.T) {
 	installPath := "/.terraform.versions_test/"
 	recentFile := "RECENT"
 	semverRegex := regexp.MustCompile(`\A\d+(\.\d+){2}(-\w+\d*)?\z`)
-	//semverRegex := regexp.MustCompile(`\A\d+(\.\d+){2}\z`)
+	// semverRegex := regexp.MustCompile(`\A\d+(\.\d+){2}\z`)
 
 	usr, errCurr := user.Current()
 	if errCurr != nil {
@@ -390,7 +413,6 @@ func TestPath(t *testing.T) {
 
 // TestGetFileName : remove file ext.  .tfswitch.config returns .tfswitch
 func TestGetFileName(t *testing.T) {
-
 	fileNameWithExt := "file.toml"
 
 	fileName := lib.GetFileName(fileNameWithExt)

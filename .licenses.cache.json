@@ -1,0 +1,479 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2024-01-05T16:40:24.145676-07:00",
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "Metadata": {
+    "ImageConfig": {
+      "architecture": "",
+      "created": "0001-01-01T00:00:00Z",
+      "os": "",
+      "rootfs": {
+        "type": "",
+        "diff_ids": null
+      },
+      "config": {}
+    }
+  },
+  "Results": [
+    {
+      "Target": "go.mod",
+      "Class": "lang-pkgs",
+      "Type": "gomod",
+      "Packages": [
+        {
+          "ID": "github.com/agext/levenshtein@v1.2.3",
+          "Name": "github.com/agext/levenshtein",
+          "Version": "1.2.3",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/apparentlymart/go-textseg@v1.0.0",
+          "Name": "github.com/apparentlymart/go-textseg",
+          "Version": "1.0.0",
+          "Licenses": [
+            "Apache-2.0",
+            "MIT",
+            "Unicode-DFS-2016"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/apparentlymart/go-textseg/v15@v15.0.0",
+          "Name": "github.com/apparentlymart/go-textseg/v15",
+          "Version": "15.0.0",
+          "Licenses": [
+            "Apache-2.0",
+            "MIT",
+            "Unicode-DFS-2016"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/chzyer/readline@v1.5.1",
+          "Name": "github.com/chzyer/readline",
+          "Version": "1.5.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "golang.org/x/sys@v0.16.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/fsnotify/fsnotify@v1.7.0",
+          "Name": "github.com/fsnotify/fsnotify",
+          "Version": "1.7.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "golang.org/x/sys@v0.16.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/google/go-cmp@v0.6.0",
+          "Name": "github.com/google/go-cmp",
+          "Version": "0.6.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/hashicorp/go-version@v1.6.0",
+          "Name": "github.com/hashicorp/go-version",
+          "Version": "1.6.0",
+          "Licenses": [
+            "MPL-2.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/hashicorp/hcl@v1.0.0",
+          "Name": "github.com/hashicorp/hcl",
+          "Version": "1.0.0",
+          "Licenses": [
+            "MPL-2.0"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/hashicorp/hcl/v2@v2.19.1",
+          "Name": "github.com/hashicorp/hcl/v2",
+          "Version": "2.19.1",
+          "Licenses": [
+            "MPL-2.0"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "github.com/google/go-cmp@v0.6.0",
+            "github.com/mitchellh/go-wordwrap@v1.0.1",
+            "github.com/spf13/pflag@v1.0.5",
+            "github.com/apparentlymart/go-textseg/v15@v15.0.0",
+            "github.com/zclconf/go-cty@v1.14.1",
+            "github.com/agext/levenshtein@v1.2.3"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/hashicorp/hcl2@v0.0.0-20191002203319-fb75b3253c80",
+          "Name": "github.com/hashicorp/hcl2",
+          "Version": "0.0.0-20191002203319-fb75b3253c80",
+          "Licenses": [
+            "MPL-2.0"
+          ],
+          "DependsOn": [
+            "github.com/mitchellh/go-wordwrap@v1.0.1",
+            "gopkg.in/yaml.v2@v2.4.0",
+            "github.com/apparentlymart/go-textseg@v1.0.0",
+            "github.com/google/go-cmp@v0.6.0",
+            "github.com/zclconf/go-cty@v1.14.1",
+            "github.com/agext/levenshtein@v1.2.3",
+            "github.com/spf13/pflag@v1.0.5"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/hashicorp/terraform-config-inspect@v0.0.0-20231204233900-a34142ec2a72",
+          "Name": "github.com/hashicorp/terraform-config-inspect",
+          "Version": "0.0.0-20231204233900-a34142ec2a72",
+          "Licenses": [
+            "MPL-2.0"
+          ],
+          "DependsOn": [
+            "github.com/google/go-cmp@v0.6.0",
+            "github.com/hashicorp/hcl@v1.0.0",
+            "github.com/spf13/pflag@v1.0.5",
+            "github.com/zclconf/go-cty@v1.14.1",
+            "github.com/hashicorp/hcl/v2@v2.19.1"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/magiconair/properties@v1.8.7",
+          "Name": "github.com/magiconair/properties",
+          "Version": "1.8.7",
+          "Licenses": [
+            "BSD-2-Clause"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/manifoldco/promptui@v0.9.0",
+          "Name": "github.com/manifoldco/promptui",
+          "Version": "0.9.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "DependsOn": [
+            "github.com/chzyer/readline@v1.5.1"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/mitchellh/go-homedir@v1.1.0",
+          "Name": "github.com/mitchellh/go-homedir",
+          "Version": "1.1.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/mitchellh/go-wordwrap@v1.0.1",
+          "Name": "github.com/mitchellh/go-wordwrap",
+          "Version": "1.0.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/mitchellh/mapstructure@v1.5.0",
+          "Name": "github.com/mitchellh/mapstructure",
+          "Version": "1.5.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/pborman/getopt@v1.1.0",
+          "Name": "github.com/pborman/getopt",
+          "Version": "1.1.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/pelletier/go-toml@v1.9.5",
+          "Name": "github.com/pelletier/go-toml",
+          "Version": "1.9.5",
+          "Licenses": [
+            "Apache-2.0",
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/pelletier/go-toml/v2@v2.1.1",
+          "Name": "github.com/pelletier/go-toml/v2",
+          "Version": "2.1.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/sagikazarmark/locafero@v0.4.0",
+          "Name": "github.com/sagikazarmark/locafero",
+          "Version": "0.4.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "github.com/sourcegraph/conc@v0.3.0",
+            "github.com/spf13/afero@v1.11.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/sagikazarmark/slog-shim@v0.1.0",
+          "Name": "github.com/sagikazarmark/slog-shim",
+          "Version": "0.1.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "golang.org/x/exp@v0.0.0-20240103183307-be819d1f06fc"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/sourcegraph/conc@v0.3.0",
+          "Name": "github.com/sourcegraph/conc",
+          "Version": "0.3.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "go.uber.org/multierr@v1.11.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/spf13/afero@v1.11.0",
+          "Name": "github.com/spf13/afero",
+          "Version": "1.11.0",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "golang.org/x/text@v0.14.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/spf13/cast@v1.6.0",
+          "Name": "github.com/spf13/cast",
+          "Version": "1.6.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/spf13/jwalterweatherman@v1.1.0",
+          "Name": "github.com/spf13/jwalterweatherman",
+          "Version": "1.1.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/spf13/pflag@v1.0.5",
+          "Name": "github.com/spf13/pflag",
+          "Version": "1.0.5",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/spf13/viper@v1.18.2",
+          "Name": "github.com/spf13/viper",
+          "Version": "1.18.2",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "github.com/spf13/afero@v1.11.0",
+            "github.com/mitchellh/mapstructure@v1.5.0",
+            "github.com/pelletier/go-toml/v2@v2.1.1",
+            "gopkg.in/ini.v1@v1.67.0",
+            "github.com/spf13/cast@v1.6.0",
+            "gopkg.in/yaml.v3@v3.0.1",
+            "github.com/spf13/pflag@v1.0.5",
+            "github.com/subosito/gotenv@v1.6.0",
+            "github.com/magiconair/properties@v1.8.7",
+            "github.com/sagikazarmark/slog-shim@v0.1.0",
+            "github.com/fsnotify/fsnotify@v1.7.0",
+            "github.com/hashicorp/hcl@v1.0.0",
+            "github.com/sagikazarmark/locafero@v0.4.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/subosito/gotenv@v1.6.0",
+          "Name": "github.com/subosito/gotenv",
+          "Version": "1.6.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "golang.org/x/text@v0.14.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "github.com/zclconf/go-cty@v1.14.1",
+          "Name": "github.com/zclconf/go-cty",
+          "Version": "1.14.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "github.com/google/go-cmp@v0.6.0",
+            "golang.org/x/text@v0.14.0",
+            "github.com/apparentlymart/go-textseg/v15@v15.0.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "go.uber.org/atomic@v1.11.0",
+          "Name": "go.uber.org/atomic",
+          "Version": "1.11.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "go.uber.org/multierr@v1.11.0",
+          "Name": "go.uber.org/multierr",
+          "Version": "1.11.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "golang.org/x/exp@v0.0.0-20240103183307-be819d1f06fc",
+          "Name": "golang.org/x/exp",
+          "Version": "0.0.0-20240103183307-be819d1f06fc",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Indirect": true,
+          "DependsOn": [
+            "github.com/google/go-cmp@v0.6.0"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "golang.org/x/sys@v0.16.0",
+          "Name": "golang.org/x/sys",
+          "Version": "0.16.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Layer": {}
+        },
+        {
+          "ID": "golang.org/x/text@v0.14.0",
+          "Name": "golang.org/x/text",
+          "Version": "0.14.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "gopkg.in/ini.v1@v1.67.0",
+          "Name": "gopkg.in/ini.v1",
+          "Version": "1.67.0",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "gopkg.in/yaml.v2@v2.4.0",
+          "Name": "gopkg.in/yaml.v2",
+          "Version": "2.4.0",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        },
+        {
+          "ID": "gopkg.in/yaml.v3@v3.0.1",
+          "Name": "gopkg.in/yaml.v3",
+          "Version": "3.0.1",
+          "Licenses": [
+            "Apache-2.0",
+            "MIT"
+          ],
+          "Indirect": true,
+          "Layer": {}
+        }
+      ]
+    },
+    {
+      "Target": "OS Packages",
+      "Class": "license"
+    },
+    {
+      "Target": "go.mod",
+      "Class": "license"
+    },
+    {
+      "Target": "Loose File License(s)",
+      "Class": "license-file"
+    }
+  ]
+}

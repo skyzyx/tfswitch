@@ -1,111 +1,125 @@
-[![Build Status](https://travis-ci.org/warrensbox/terraform-switcher.svg?branch=master)](https://travis-ci.org/warrensbox/terraform-switcher)
-[![Go Report Card](https://goreportcard.com/badge/github.com/warrensbox/terraform-switcher)](https://goreportcard.com/report/github.com/warrensbox/terraform-switcher)
-[![CircleCI](https://circleci.com/gh/warrensbox/terraform-switcher/tree/master.svg?style=shield&circle-token=55ddceec95ff67eb38269152282f8a7d761c79a5)](https://circleci.com/gh/warrensbox/terraform-switcher)
+# tfswitch
 
-# Terraform Switcher
+<div align="center"><img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/smallerlogo.png" alt="drawing" width="120" height="130"></div>
 
-<img style="text-allign:center" src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/smallerlogo.png" alt="drawing" width="120" height="130"/>
+**tfswitch** lets you switch between different versions of [Terraform] or [OpenTofu]. If you do not have a particular version installed, `tfswitch` will download the version you desire. The installation is minimal and easy. Once installed, simply select the version you require from the dropdown and start using Terraform or OpenTofu.
 
-<!-- ![gopher](https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/logo.png =100x20) -->
+For requested versions 1.5.x and older, `tfswitch` will always install [Terraform]. If you request version 1.6.0 or newer, `tfswitch` will install [Terraform] by default, however, you can specify that you prefer [OpenTofu] instead.
 
-The `tfswitch` command line tool lets you switch between different versions of [terraform](https://www.terraform.io/).
-If you do not have a particular version of terraform installed, `tfswitch` will download the version you desire.
-The installation is minimal and easy.
-Once installed, simply select the version you require from the dropdown and start using terraform.
+The "TF" in the name can stand for _Terraform_ or _Tofu_ — your choice!
+
+> [!NOTE]
+> This is a **hard fork** of [warrensbox/terraform-switcher](https://github.com/warrensbox/terraform-switcher) (which _appeared_ to be abandoned based on the commit history), and adds support for OpenTofu as an alternative for Terraform 1.6 and newer.
 
 ## Installation
 
-`tfswitch` is available for MacOS and Linux based operating systems.
+`tfswitch` is available for macOS and Linux-based operating systems.
 
-### Homebrew
+### macOS via Homebrew
 
-Installation for MacOS is the easiest with Homebrew. [If you do not have homebrew installed, click here](https://brew.sh/).
+Installation for macOS is the easiest with [Homebrew].
 
+### Linux via curl
 
-```ruby
-brew install warrensbox/tap/tfswitch
-```
+Installation for Linux operation systems.
 
-### General Linux
-
-Installation for other linux operation systems.
-
-```sh
-curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash
-```
-
-### Arch User Repository (AUR) packages for Arch Linux
-
-```sh
-# compiled from source
-yay tfswitch
-# precompiled
-yay tfswitch-bin
-```
-### Install from source
-
-Alternatively, you can install the binary from source [here](https://github.com/warrensbox/terraform-switcher/releases)
-
-[Having trouble installing](https://tfswitch.warrensbox.com/Troubleshoot/).
-
-## How to use:
-### Use dropdown menu to select version
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/tfswitch.gif#1" alt="drawing" style="width: 370px;"/>
-
-1.  You can switch between different versions of terraform by typing the command `tfswitch` on your terminal.
-2.  Select the version of terraform you require by using the up and down arrow.
-3.  Hit **Enter** to select the desired version.
-
-The most recently selected versions are presented at the top of the dropdown.
-
-### Supply version on command line
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/tfswitch-v4.gif#1" alt="drawing" style="width: 370px;"/>
-
-1. You can also supply the desired version as an argument on the command line.
-2. For example, `tfswitch 0.10.5` for version 0.10.5 of terraform.
-3. Hit **Enter** to switch.
-
-### See all versions including beta, alpha and release candidates(rc)
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/tfswitch-v5.gif#1" alt="drawing" style="width: 370px;"/>
-
-1. Display all versions including beta, alpha and release candidates(rc).
-2. For example, `tfswitch -l` or `tfswitch --list-all` to see all versions.
-3. Hit **Enter** to select the desired version.
-
-### Use environment variable
-You can also set the `TF_VERSION` environment variable to your desired terraform version.
-For example:   
 ```bash
-export TF_VERSION=0.14.4
-tfswitch #will automatically switch to terraform version 0.14.4
+curl -L https://raw.githubusercontent.com/skyzyx/tfswitch/release/install.sh | bash
 ```
-### Install latest version only
-1. Install the latest stable version only.
-2. Run `tfswitch -u` or `tfswitch --latest`.
-3. Hit **Enter** to install.
-### Install latest implicit version for stable releases
-1. Install the latest implicit stable version.
-2. Ex: `tfswitch -s 0.13` or `tfswitch --latest-stable 0.13` downloads 0.13.6 (latest) version.
-3. Hit **Enter** to install.
-### Install latest implicit version for beta, alpha and release candidates(rc)
-1. Install the latest implicit pre-release version.
-2. Ex: `tfswitch -p 0.13` or `tfswitch --latest-pre 0.13` downloads 0.13.0-rc1 (latest) version.
-3. Hit **Enter** to install.
-### Show latest version only
-1. Just show what the latest version is.
-2. Run `tfswitch -U` or `tfswitch --show-latest`
-3. Hit **Enter** to show.
-### Show latest implicit version for stable releases
-1. Show the latest implicit stable version.
-2. Ex: `tfswitch -S 0.13` or `tfswitch --show-latest-stable 0.13` shows 0.13.6 (latest) version.
-3. Hit **Enter** to show.
-### Show latest implicit version for beta, alpha and release candidates(rc)
-1. Show the latest implicit pre-release version.
-2. Ex: `tfswitch -P 0.13` or `tfswitch --show-latest-pre 0.13` shows 0.13.0-rc1 (latest) version.
-3. Hit **Enter** to show.
-### Use version.tf file
-If a .tf file with the terraform constrain is included in the current directory, it should automatically download or switch to that terraform version. For example, the following should automatically switch terraform to the latest version:
-```ruby
+
+### Download from GitHub
+
+Alternatively, you can [install binaries from our releases](https://github.com/skyzyx/tfswitch/releases).
+
+## Usage
+
+### Select a version (interactive)
+
+You can switch between different versions by typing the command `tfswitch` on your terminal.
+
+1. Select the version you require by using the up and down arrow.
+1. Press **Enter** to select the desired version.
+
+> [!NOTE]
+> The recently **selected** versions are presented at the top of the dropdown.
+
+### Supply version on command line (non-interactive)
+
+Install and/or switch to Terraform v1.5.0 _specifically_.
+
+```bash
+tfswitch 1.5.0
+```
+
+### View all versions including alpha, beta, and RCs (non-interactive)
+
+View all available versions.
+
+```bash
+tfswitch --list-all
+```
+
+### Use environment variables (non-interactive)
+
+Set the `TF_VERSION` environment variable to your desired Terraform/OpenTofu version.
+
+```bash
+# Will automatically switch to Terraform 1.5.0
+export TF_VERSION=1.5.0
+tfswitch
+```
+
+### Install very latest version (non-interactive)
+
+```bash
+tfswitch --latest
+```
+
+### Install latest stable version for a major.minor line
+
+Install and/or switch to v1.5.7 — the latest version of the 1.5.x line.
+
+```bash
+tfswitch --latest-stable 1.5
+```
+
+### Install latest pre-release version for a major.minor line
+
+Install and/or switch to v1.7.0-rc1 — the latest pre-release of the 1.7.x line (as of 2024-01-05).
+
+```bash
+tfswitch --latest-pre 1.7
+```
+
+### Show very latest version
+
+View the version number of the latest release without installing/switching-to it.
+
+```bash
+tfswitch --show-latest
+```
+
+### Show latest stable version for a major.minor line
+
+View the version number of the latest version of the 1.5.x line without installing/switching-to it.
+
+```bash
+tfswitch --show-latest-stable 1.5
+```
+
+### Show latest pre-release version for a major.minor line
+
+View the version number of the latest pre-release of the 1.7.x line without installing/switching-to it (as of 2024-01-05).
+
+```bash
+tfswitch --show-latest-pre 1.7
+```
+
+### Use `version.tf`/`versions.tf` file
+
+If a `*.tf` file with the `terraform` → `required_version` constraint is included in the current directory, it should automatically install and/or switch-to that version. For example, the following should automatically switch to the very latest version because there's no upper-bound on the constraint.
+
+```hcl
 terraform {
   required_version = ">= 0.12.9"
 
@@ -115,73 +129,91 @@ terraform {
   }
 }
 ```
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/versiontf.gif#1" alt="drawing" style="width: 370px;"/>
 
-### Use .tfswitch.toml file  (For non-admin - users with limited privilege on their computers)
-This is similiar to using a .tfswitchrc file, but you can specify a custom binary path for your terraform installation
+### Use `.tfswitch.toml` file
 
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/tfswitch-v7.gif#1" alt="drawing" style="width: 370px;"/>
+This is for non-admin users with limited privileges on their computer. It is similar to using a `.tfswitchrc` file, but you can specify a custom binary path for your installation.
 
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/tfswitch-v8.gif#1" alt="drawing" style="width: 370px;"/>
+1. Create a custom binary path. For example:
 
-1. Create a custom binary path. Ex: `mkdir /Users/warrenveerasingam/bin` (replace warrenveerasingam with your username)
-2. Add the path to your PATH. Ex: `export PATH=$PATH:/Users/warrenveerasingam/bin` (add this to your bash profile or zsh profile)
-3. Pass -b or --bin parameter with your custom path to install terraform. Ex: `tfswitch -b /Users/warrenveerasingam/bin/terraform 0.10.8 `
-4. Optionally, you can create a `.tfswitch.toml` file in your terraform directory(current directory) OR in your home directory(~/.tfswitch.toml). The toml file in the current directory has a higher precedence than toml file in the home directory
-5. Your `.tfswitch.toml` file should look like this:
-```ruby
-bin = "/Users/warrenveerasingam/bin/terraform"
-version = "0.11.3"
+    ```bash
+    mkdir -p ~/bin
+    ```
+
+1. Add the path to your `$PATH` environment variable via your Bash or Zsh profile.
+
+    ```bash
+    export PATH="$PATH:$HOME/bin"
+    ```
+
+1. Pass the `--bin` parameter with your custom path to install. For example:
+
+    ```bash
+    tfswitch --bin $HOME/bin/terraform 1.5.0
+    ```
+
+1. Alternatively, you can create a `.tfswitch.toml` file in your current directory (`./`) OR in your home directory (`~/.tfswitch.toml`). The TOML file in the current directory has a higher precedence than TOML file in the home directory.
+
+    ```toml
+    bin = "$HOME/bin/terraform"
+    version = "0.11.3"
+    ```
+
+1. Run `tfswitch` and it should automatically install the required version in the specified binary path.
+
+> [!NOTE]
+> For Linux users that do not have write permission to `/usr/local/bin/`, `tfswitch` will attempt to install to `$HOME/bin/`. Run `export PATH="$PATH:$HOME/bin"` to append this location to your `$PATH`.
+
+### Use `.tfswitchrc`/`.terraform-version` file
+
+Create a `.tfswitchrc` or `.terraform-version` file containing the desired version. For example, if you wanted to install Terraform v1.5.0, you would use:
+
+```bash
+echo "1.5.0" > .tfswitchrc
 ```
-4. Run `tfswitch` and it should automatically install the required terraform version in the specified binary path
 
-**NOTE** 
-1. For linux users that do not have write permission to `/usr/local/bin/`, `tfswitch` will attempt to install terraform at `$HOME/bin`. Run `export PATH=$PATH:$HOME/bin` to append bin to PATH  
-2. For windows host, `tfswitch` need to be run under `Administrator` mode, and `$HOME/.tfswitch.toml` with `bin` must be defined (with a valid path) as minimum, below is an example for `$HOME/.tfswitch.toml` on windows
+If both `.tfswitchrc` and `.terraform-version` are provided, `.tfswitchrc` will be preferred.
+
+### Use `terragrunt.hcl` file
+
+If a `terragrunt.hcl` file with the Terraform constraint is included in the current directory, `tfswitch` will automatically install and/or switch-to that version. For example, the following should automatically switch to the latest 1.5 version:
 
 ```toml
-bin = "C:\\Users\\<%USRNAME%>\\bin\\terraform.exe"
-```
-### Use .tfswitchrc file
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/tfswitch-v6.gif#1" alt="drawing" style="width: 370px;"/>
-
-1. Create a `.tfswitchrc` file containing the desired version
-2. For example, `echo "0.10.5" >> .tfswitchrc` for version 0.10.5 of terraform
-3. Run the command `tfswitch` in the same directory as your `.tfswitchrc`
-
-#### *Instead of a `.tfswitchrc` file, a `.terraform-version` file may be used for compatibility with [`tfenv`](https://github.com/tfutils/tfenv#terraform-version-file) and other tools which use it*
-
-### Use terragrunt.hcl file
-If a terragrunt.hcl file with the terraform constrain is included in the current directory, it should automatically download or switch to that terraform version. For example, the following should automatically switch terraform to the latest version 0.13:
-```ruby
 terragrunt_version_constraint = ">= 0.26, < 0.27"
-terraform_version_constraint  = ">= 0.13, < 0.14"
-...
+terraform_version_constraint  = ">= 1.5, < 1.6"
+# ...
 ```
 
 ### Get the version from a subdirectory
+
 ```bash
-tfswitch --chdir terraform_dir
-tfswitch -c terraform_dir
+tfswitch --chdir ./terraform
 ```
 
-### Use custom mirror 
-To install from a remote mirror other than the default(https://releases.hashicorp.com/terraform). Use the `-m` or `--mirror` parameter.    
-Ex: `tfswitch --mirror https://example.jfrog.io/artifactory/hashicorp`
+### Use custom mirror
 
-### Set a default TF version for CICD pipeline
-1. When using a CICD pipeline, you may want a default or fallback version to avoid the pipeline from hanging.
-2. Ex: `tfswitch -d 1.2.3` or `tfswitch --default 1.2.3` installs version `1.2.3` when no other versions could be detected.
-[Also, see CICD example](#cicd)
+To install from a remote mirror other than the default (<https://releases.hashicorp.com/terraform>). Use the `--mirror` parameter.
+
+```bash
+tfswitch --mirror https://example.jfrog.io/artifactory/hashicorp
+```
+
+### Set a default version for CI pipeline
+
+When running inside of a CI pipeline, you may want a default or fallback version to prevent the pipeline from hanging. This example will install version `1.5.0` when no other version specifications could be detected.
+
+```bash
+tfswitch --default 1.5.0
+```
 
 ## Automation
-**Automatically switch with bash**
 
-Add the following to the end of your `~/.bashrc` file:
-(Use either `.tfswitchrc` or `.tfswitch.toml` or `.terraform-version`)
+### Automatically switch with Bash
 
-```sh
-cdtfswitch(){
+Add the following to the end of your `~/.bashrc` file. You can adapt this to look for `.tfswitchrc`, `.tfswitch.toml`, `.terraform-version`, or `versions.tf`.
+
+```bash
+cdtfswitch() {
   builtin cd "$@";
   cdir=$PWD;
   if [ -e "$cdir/.tfswitchrc" ]; then
@@ -191,11 +223,11 @@ cdtfswitch(){
 alias cd='cdtfswitch'
 ```
 
-**Automatically switch with zsh**
+### Automatically switch with Zsh
 
-Add the following to the end of your `~/.zshrc` file:
+Add the following to the end of your `~/.zshrc` file. You can adapt this to look for `.tfswitchrc`, `.tfswitch.toml`, `.terraform-version`, or `versions.tf`.
 
-```sh
+```zsh
 load-tfswitch() {
   local tfswitchrc_path=".tfswitchrc"
 
@@ -204,16 +236,15 @@ load-tfswitch() {
   fi
 }
 add-zsh-hook chpwd load-tfswitch
-load-tfswitch
 ```
-> NOTE: if you see an error like this: `command not found: add-zsh-hook`, then you might be on an older version of zsh (see below), or you simply need to load `add-zsh-hook` by adding this to your `.zshrc`:
->    ```
->    autoload -U add-zsh-hook
->    ```
 
-*older version of zsh*
-```sh
-cd(){
+> [!NOTE]
+> If you see an error like `command not found: add-zsh-hook`, then you might be on an older version of Zsh (see below), or you simply need to load `add-zsh-hook` by adding `autoload -U add-zsh-hook` to your `~/.zshrc` file.
+
+#### Older versions of Zsh
+
+```zsh
+cd() {
   builtin cd "$@";
   cdir=$PWD;
   if [ -e "$cdir/.tfswitchrc" ]; then
@@ -222,120 +253,36 @@ cd(){
 }
 ```
 
-**Automatically switch with fish shell**
+### Automatically switch with Fish shell
 
-Add the following to the end of your `~/.config/fish/config.fish` file:
+Add the following to the end of your `~/.config/fish/config.fish` file. You can adapt this to look for `.tfswitchrc`, `.tfswitch.toml`, `.terraform-version`, or `versions.tf`.
 
-```sh
+```fish
 function switch_terraform --on-event fish_postexec
-    string match --regex '^cd\s' "$argv" > /dev/null
-    set --local is_command_cd $status
+  string match --regex '^cd\s' "$argv" > /dev/null
+  set --local is_command_cd $status
 
-    if test $is_command_cd -eq 0 
-      if count *.tf > /dev/null
+  if test $is_command_cd -eq 0
+    if count *.tf > /dev/null
+      grep -c "required_version" *.tf > /dev/null
+      set --local tf_contains_version $status
 
-        grep -c "required_version" *.tf > /dev/null
-        set --local tf_contains_version $status
-        
-        if test $tf_contains_version -eq 0      
-            command tfswitch
-        end
+      if test $tf_contains_version -eq 0
       end
     end
+  end
 end
 ```
-## CICD
-### Jenkins setup
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/jenkins_tfswitch.png" alt="drawing" style="width: 170px;"/>
 
-```sh
-#!/bin/bash 
-
-echo "Installing tfswitch locally"
-wget https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh #Get the installer on to your machine
-
-chmod 755 install.sh            #Make installer executable
-
-./install.sh -b `pwd`/.bin      #Install tfswitch in a location you have permission
-
-CUSTOMBIN=`pwd`/.bin            #set custom bin path
-
-export PATH=$PATH:$CUSTOMBIN    #Add custom bin path to PATH environment
-
-$CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 0.11.7 #or simply tfswitch -b $CUSTOMBIN/terraform 0.11.7
-
-#OR 
-
-$CUSTOMBIN/tfswitch -d 0.11.7 -b $CUSTOMBIN/terraform  #or simply tfswitch -d 0.11.7 -b $CUSTOMBIN/terraform 
-
-terraform -v                    #testing version
-```
-
-### Circle CI setup
-
-<img src="https://s3.us-east-2.amazonaws.com/kepler-images/warrensbox/tfswitch/circleci_tfswitch.png" alt="drawing" style="width: 280px;"/>
-
-
-Example config yaml
-```yaml
-version: 2
-jobs:
-  build:
-    docker:
-      - image: ubuntu
-
-    working_directory: /go/src/github.com/warrensbox/terraform-switcher
-
-    steps:
-      - checkout
-      - run: 
-          command: |    
-            set +e   
-            apt-get update 
-            apt-get install -y wget 
-            rm -rf /var/lib/apt/lists/*
-
-            echo "Installing tfswitch locally"
-
-            wget https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh #Get the installer on to your machine
-
-            chmod 755 install.sh            #Make installer executable
-
-            ./install.sh -b `pwd`/.bin      #Install tfswitch in a location you have permission
-
-            CUSTOMBIN=`pwd`/.bin            #set custom bin path
-
-            export PATH=$PATH:$CUSTOMBIN    #Add custom bin path to PATH environment
-
-            $CUSTOMBIN/tfswitch -b $CUSTOMBIN/terraform 0.11.7 #or simply tfswitch -b $CUSTOMBIN/terraform 0.11.7
-
-            #OR
-            $CUSTOMBIN/tfswitch -d 0.11.7 -b $CUSTOMBIN/terraform  #or simply tfswitch -d 0.11.7 -b $CUSTOMBIN/terraform 
-            
-            terraform -v                    #testing version
-```
 ## Order of precedence
 
-| Order | Method |
-| --- | ----------- |
-| 1 | .tfswitch.toml |
-| 2 | .tfswitchrc |
-| 3 | .terraform-version |
-| 4 | Environment variable |
+| Order | Method               |
+|-------|----------------------|
+| 1     | `.tfswitch.toml`     |
+| 2     | `.tfswitchrc`        |
+| 3     | `.terraform-version` |
+| 4     | Environment variable |
 
-With 1 being the highest precedence and 4 the lowest   
-*(If you disagree with this order of precedence, please open an issue)*
-## How to contribute    
-An open source project becomes meaningful when people collaborate to improve the code.    
-Feel free to look at the code, critique and make suggestions. Lets make `tfswitch` better!   
-
-See step-by-step instructions on how to contribute here: [Contribute](https://tfswitch.warrensbox.com/How-to-Contribute/)      
-
-## Additional Info
-
-See how to *upgrade*, *uninstall*, *troubleshoot* here: [More info](https://tfswitch.warrensbox.com/Upgrade-or-Uninstall/)   
-
-
-## Issues
-
-Please open  *issues* here: [New Issue](https://github.com/warrensbox/terraform-switcher/issues)
+  [Homebrew]: https://brew.sh
+  [OpenTofu]: https://opentofu.org
+  [Terraform]: https://www.terraform.io

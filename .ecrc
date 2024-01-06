@@ -1,0 +1,20 @@
+{
+    "Exclude": [
+        "\\.cache$",
+        "\\.dcignore$",
+        "\\.example$",
+        "\\.go$",
+        "\\.golangci.yml$",
+        "\\.goreleaser.yml$",
+        "\\.gotmpl$",
+        "\\.svg$",
+        "\\.txt$",
+        "go\\.mod$",
+        "go\\.sum$",
+        "install\\.sh$",
+        "www/site"
+    ],
+    "IgnoreDefaults": true,
+    "SpacesAfterTabs": false,
+    "Verbose": false
+}

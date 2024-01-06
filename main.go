@@ -1,3 +1,26 @@
+// MIT License
+//
+// Copyright (c) 2018 warrensbox
+// Copyright (c) 2024 Ryan Parman <https://ryanparman.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package main
 
 /*
@@ -19,7 +42,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -34,12 +56,12 @@ import (
 	"github.com/pborman/getopt"
 	"github.com/spf13/viper"
 
-	lib "github.com/warrensbox/terraform-switcher/lib"
+	lib "github.com/skyzyx/tfswitch/lib"
 )
 
 const (
 	defaultMirror = "https://releases.hashicorp.com/terraform"
-	defaultBin    = "/usr/local/bin/terraform" //default bin installation dir
+	defaultBin    = "/usr/local/bin/terraform" // default bin installation dir
 	defaultLatest = ""
 	tfvFilename   = ".terraform-version"
 	rcFilename    = ".tfswitchrc"
@@ -72,18 +94,18 @@ func main() {
 
 	homedir := lib.GetHomeDirectory()
 
-	TFVersionFile := filepath.Join(*chDirPath, tfvFilename)    //settings for .terraform-version file in current directory (tfenv compatible)
-	RCFile := filepath.Join(*chDirPath, rcFilename)            //settings for .tfswitchrc file in current directory (backward compatible purpose)
-	TOMLConfigFile := filepath.Join(*chDirPath, tomlFilename)  //settings for .tfswitch.toml file in current directory (option to specify bin directory)
-	HomeTOMLConfigFile := filepath.Join(homedir, tomlFilename) //settings for .tfswitch.toml file in home directory (option to specify bin directory)
-	TGHACLFile := filepath.Join(*chDirPath, tgHclFilename)     //settings for terragrunt.hcl file in current directory (option to specify bin directory)
+	TFVersionFile := filepath.Join(*chDirPath, tfvFilename)    // settings for .terraform-version file in current directory (tfenv compatible)
+	RCFile := filepath.Join(*chDirPath, rcFilename)            // settings for .tfswitchrc file in current directory (backward compatible purpose)
+	TOMLConfigFile := filepath.Join(*chDirPath, tomlFilename)  // settings for .tfswitch.toml file in current directory (option to specify bin directory)
+	HomeTOMLConfigFile := filepath.Join(homedir, tomlFilename) // settings for .tfswitch.toml file in home directory (option to specify bin directory)
+	TGHACLFile := filepath.Join(*chDirPath, tgHclFilename)     // settings for terragrunt.hcl file in current directory (option to specify bin directory)
 
 	switch {
 	case *versionFlag:
-		//if *versionFlag {
+		// if *versionFlag {
 		fmt.Printf("\nVersion: %v\n", version)
 	case *helpFlag:
-		//} else if *helpFlag {
+		// } else if *helpFlag {
 		usageMessage()
 	/* Checks if the .tfswitch.toml file exist in home or current directory
 	 * This block checks to see if the tfswitch toml file is provided in the current path.
@@ -95,7 +117,7 @@ func main() {
 	case fileExists(TOMLConfigFile) || fileExists(HomeTOMLConfigFile):
 		version := ""
 		binPath := *custBinPath
-		if fileExists(TOMLConfigFile) { //read from toml from current directory
+		if fileExists(TOMLConfigFile) { // read from toml from current directory
 			version, binPath = getParamsTOML(binPath, *chDirPath)
 		} else { // else read from toml from home directory
 			version, binPath = getParamsTOML(binPath, homedir)
@@ -105,7 +127,7 @@ func main() {
 		/* GIVEN A TOML FILE, */
 		/* show all terraform version including betas and RCs*/
 		case *listAllFlag:
-			listAll := true //set list all true - all versions including beta and rc will be displayed
+			listAll := true // set list all true - all versions including beta and rc will be displayed
 			installOption(listAll, &binPath, mirrorURL)
 		/* latest pre-release implicit version. Ex: tfswitch --latest-pre 0.13 downloads 0.13.0-rc1 (latest) */
 		case *latestPre != "":
@@ -146,7 +168,7 @@ func main() {
 		case version != "":
 			installVersion(version, &binPath, mirrorURL)
 		default:
-			listAll := false //set list all false - only official release will be displayed
+			listAll := false // set list all false - only official release will be displayed
 			installOption(listAll, &binPath, mirrorURL)
 		}
 
@@ -218,7 +240,7 @@ func main() {
 
 	// if no arg is provided
 	default:
-		listAll := false //set list all false - only official release will be displayed
+		listAll := false // set list all false - only official release will be displayed
 		installOption(listAll, custBinPath, mirrorURL)
 	}
 }
@@ -227,7 +249,7 @@ func main() {
 
 // install with all possible versions, including beta and rc
 func installWithListAll(custBinPath, mirrorURL *string) {
-	listAll := true //set list all true - all versions including beta and rc will be displayed
+	listAll := true // set list all true - all versions including beta and rc will be displayed
 	installOption(listAll, custBinPath, mirrorURL)
 }
 
@@ -249,7 +271,7 @@ func installLatestImplicitVersion(requestedVersion string, custBinPath, mirrorUR
 	if err != nil {
 		fmt.Printf("error parsing constraint: %s\n", err)
 	}
-	//if lib.ValidMinorVersionFormat(requestedVersion) {
+	// if lib.ValidMinorVersionFormat(requestedVersion) {
 	tfversion, err := lib.GetTFLatestImplicit(*mirrorURL, preRelease, requestedVersion)
 	if err == nil && tfversion != "" {
 		lib.Install(tfversion, *custBinPath, *mirrorURL)
@@ -278,21 +300,21 @@ func installVersion(arg string, custBinPath *string, mirrorURL *string) {
 	if lib.ValidVersionFormat(arg) {
 		requestedVersion := arg
 
-		//check to see if the requested version has been downloaded before
+		// check to see if the requested version has been downloaded before
 		installLocation := lib.GetInstallLocation()
 		installFileVersionPath := lib.ConvertExecutableExt(filepath.Join(installLocation, versionPrefix+requestedVersion))
 		recentDownloadFile := lib.CheckFileExist(installFileVersionPath)
 		if recentDownloadFile {
 			lib.ChangeSymlink(installFileVersionPath, *custBinPath)
 			fmt.Printf("Switched terraform to version %q \n", requestedVersion)
-			lib.AddRecent(requestedVersion) //add to recent file for faster lookup
+			lib.AddRecent(requestedVersion) // add to recent file for faster lookup
 			os.Exit(0)
 		}
 
-		//if the requested version had not been downloaded before
-		listAll := true                                     //set list all true - all versions including beta and rc will be displayed
-		tflist, _ := lib.GetTFList(*mirrorURL, listAll)     //get list of versions
-		exist := lib.VersionExist(requestedVersion, tflist) //check if version exist before downloading it
+		// if the requested version had not been downloaded before
+		listAll := true                                     // set list all true - all versions including beta and rc will be displayed
+		tflist, _ := lib.GetTFList(*mirrorURL, listAll)     // get list of versions
+		exist := lib.VersionExist(requestedVersion, tflist) // check if version exist before downloading it
 
 		if exist {
 			lib.Install(requestedVersion, *custBinPath, *mirrorURL)
@@ -300,7 +322,6 @@ func installVersion(arg string, custBinPath *string, mirrorURL *string) {
 			fmt.Println("The provided terraform version does not exist. Try `tfswitch -l` to see all available versions.")
 			os.Exit(1)
 		}
-
 	} else {
 		lib.PrintInvalidTFVersion()
 		fmt.Println("Args must be a valid terraform version")
@@ -309,11 +330,11 @@ func installVersion(arg string, custBinPath *string, mirrorURL *string) {
 	}
 }
 
-//retrive file content of regular file
+// retrieve file content of regular file
 func retrieveFileContents(file string) string {
-	fileContents, err := ioutil.ReadFile(file)
+	fileContents, err := os.ReadFile(file)
 	if err != nil {
-		fmt.Printf("Failed to read %s file. Follow the README.md instructions for setup. https://github.com/warrensbox/terraform-switcher/blob/master/README.md\n", tfvFilename)
+		fmt.Printf("Failed to read %s file. Follow the README.md instructions for setup. https://github.com/skyzyx/tfswitch/blob/master/README.md\n", tfvFilename)
 		fmt.Printf("Error: %s\n", err)
 		os.Exit(1)
 	}
@@ -338,7 +359,6 @@ func fileExists(filename string) bool {
 // fileExists checks if a file exists and is not a directory before we
 // try using it to prevent further errors.
 func checkTFModuleFileExist(dir string) bool {
-
 	module, _ := tfconfig.LoadModule(dir)
 	if len(module.RequiredCore) >= 1 {
 		return true
@@ -363,8 +383,8 @@ func getParamsTOML(binPath string, dir string) (string, string) {
 	} else {
 		path = "current directory"
 	}
-	fmt.Printf("Reading configuration from %s\n", path+" for "+tomlFilename) //takes the default bin (defaultBin) if user does not specify bin path
-	configfileName := lib.GetFileName(tomlFilename)                          //get the config file
+	fmt.Printf("Reading configuration from %s\n", path+" for "+tomlFilename) // takes the default bin (defaultBin) if user does not specify bin path
+	configfileName := lib.GetFileName(tomlFilename)                          // get the config file
 	viper.SetConfigType("toml")
 	viper.SetConfigName(configfileName)
 	viper.AddConfigPath(dir)
@@ -380,8 +400,8 @@ func getParamsTOML(binPath string, dir string) (string, string) {
 	if binPath == lib.ConvertExecutableExt(defaultBin) && bin != nil { // if the bin path is the same as the default binary path and if the custom binary is provided in the toml file (use it)
 		binPath = os.ExpandEnv(bin.(string))
 	}
-	//fmt.Println(binPath) //uncomment this to debug
-	version := viper.Get("version") //attempt to get the version if it's provided in the toml
+	// fmt.Println(binPath) //uncomment this to debug
+	version := viper.Get("version") // attempt to get the version if it's provided in the toml
 	if version == nil {
 		version = ""
 	}
@@ -399,10 +419,10 @@ func usageMessage() {
 /* listAll = true - all versions including beta and rc will be displayed */
 /* listAll = false - only official stable release are displayed */
 func installOption(listAll bool, custBinPath, mirrorURL *string) {
-	tflist, _ := lib.GetTFList(*mirrorURL, listAll) //get list of versions
-	recentVersions, _ := lib.GetRecentVersions()    //get recent versions from RECENT file
-	tflist = append(recentVersions, tflist...)      //append recent versions to the top of the list
-	tflist = lib.RemoveDuplicateVersions(tflist)    //remove duplicate version
+	tflist, _ := lib.GetTFList(*mirrorURL, listAll) // get list of versions
+	recentVersions, _ := lib.GetRecentVersions()    // get recent versions from RECENT file
+	tflist = append(recentVersions, tflist...)      // append recent versions to the top of the list
+	tflist = lib.RemoveDuplicateVersions(tflist)    // remove duplicate version
 
 	if len(tflist) == 0 {
 		fmt.Println("[ERROR] : List is empty")
@@ -415,7 +435,7 @@ func installOption(listAll bool, custBinPath, mirrorURL *string) {
 	}
 
 	_, tfversion, errPrompt := prompt.Run()
-	tfversion = strings.Trim(tfversion, " *recent") //trim versions with the string " *recent" appended
+	tfversion = strings.Trim(tfversion, " *recent") // trim versions with the string " *recent" appended
 
 	if errPrompt != nil {
 		log.Printf("Prompt failed %v\n", errPrompt)
@@ -430,19 +450,18 @@ func installOption(listAll bool, custBinPath, mirrorURL *string) {
 func installTFProvidedModule(dir string, custBinPath, mirrorURL *string) {
 	fmt.Printf("Reading required version from terraform file\n")
 	module, _ := tfconfig.LoadModule(dir)
-	tfconstraint := module.RequiredCore[0] //we skip duplicated definitions and use only first one
+	tfconstraint := module.RequiredCore[0] // we skip duplicated definitions and use only first one
 	installFromConstraint(&tfconstraint, custBinPath, mirrorURL)
 }
 
 // install using a version constraint
 func installFromConstraint(tfconstraint *string, custBinPath, mirrorURL *string) {
-
 	tfversion, err := lib.GetSemver(tfconstraint, mirrorURL)
 	if err == nil {
 		lib.Install(tfversion, *custBinPath, *mirrorURL)
 	}
 	fmt.Println(err)
-	fmt.Println("No version found to match constraint. Follow the README.md instructions for setup. https://github.com/warrensbox/terraform-switcher/blob/master/README.md")
+	fmt.Println("No version found to match constraint. Follow the README.md instructions for setup. https://github.com/skyzyx/tfswitch/blob/master/README.md")
 	os.Exit(1)
 }
 
@@ -450,7 +469,7 @@ func installFromConstraint(tfconstraint *string, custBinPath, mirrorURL *string)
 func installTGHclFile(tgFile *string, custBinPath, mirrorURL *string) {
 	fmt.Printf("Terragrunt file found: %s\n", *tgFile)
 	parser := hclparse.NewParser()
-	file, diags := parser.ParseHCLFile(*tgFile) //use hcl parser to parse HCL file
+	file, diags := parser.ParseHCLFile(*tgFile) // use hcl parser to parse HCL file
 	if diags.HasErrors() {
 		fmt.Println("Unable to parse HCL file")
 		os.Exit(1)
@@ -467,7 +486,7 @@ type terragruntVersionConstraints struct {
 // check if version is defined in hcl file /* lazy-emergency fix - will improve later */
 func checkVersionDefinedHCL(tgFile *string) bool {
 	parser := hclparse.NewParser()
-	file, diags := parser.ParseHCLFile(*tgFile) //use hcl parser to parse HCL file
+	file, diags := parser.ParseHCLFile(*tgFile) // use hcl parser to parse HCL file
 	if diags.HasErrors() {
 		fmt.Println("Unable to parse HCL file")
 		os.Exit(1)

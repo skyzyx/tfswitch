@@ -1,3 +1,26 @@
+// MIT License
+//
+// Copyright (c) 2018 warrensbox
+// Copyright (c) 2024 Ryan Parman <https://ryanparman.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package lib
 
 import (
@@ -17,17 +40,14 @@ const (
 	versionPrefix             = "terraform_"
 	installPath               = ".terraform.versions"
 	recentFile                = "RECENT"
-	defaultBin                = "/usr/local/bin/terraform" //default bin installation dir
+	defaultBin                = "/usr/local/bin/terraform" // default bin installation dir
 	tfDarwinArm64StartVersion = "1.0.2"
 )
 
-var (
-	installLocation = "/tmp"
-)
+var installLocation = "/tmp"
 
 // initialize : removes existing symlink to terraform binary// I Don't think this is needed
 func initialize() {
-
 	/* Step 1 */
 	/* initilize default binary path for terraform */
 	/* assumes that terraform is installed here */
@@ -51,7 +71,6 @@ func initialize() {
 	if symlinkExist {
 		RemoveSymlink(installedBinPath)
 	}
-
 }
 
 // GetInstallLocation : get location where the terraform binary will be installed,
@@ -72,12 +91,10 @@ func GetInstallLocation() string {
 	CreateDirIfNotExist(installLocation)
 
 	return installLocation
-
 }
 
-//Install : Install the provided version in the argument
+// Install : Install the provided version in the argument
 func Install(tfversion string, binPath string, mirrorURL string) {
-
 	// if !ValidVersionFormat(tfversion) {
 	// 	fmt.Printf("The provided terraform version format does not exist - %s. Try `tfswitch -l` to see all available versions.\n", tfversion)
 	// 	os.Exit(1)
@@ -90,8 +107,8 @@ func Install(tfversion string, binPath string, mirrorURL string) {
 	 */
 	binPath = InstallableBinLocation(binPath)
 
-	initialize()                           //initialize path
-	installLocation = GetInstallLocation() //get installation location -  this is where we will put our terraform binary file
+	initialize()                           // initialize path
+	installLocation = GetInstallLocation() // get installation location -  this is where we will put our terraform binary file
 
 	goarch := runtime.GOARCH
 	goos := runtime.GOOS
@@ -120,11 +137,11 @@ func Install(tfversion string, binPath string, mirrorURL string) {
 		/* set symlink to desired version */
 		CreateSymlink(installFileVersionPath, binPath)
 		fmt.Printf("Switched terraform to version %q \n", tfversion)
-		AddRecent(tfversion) //add to recent file for faster lookup
+		AddRecent(tfversion) // add to recent file for faster lookup
 		os.Exit(0)
 	}
 
-	//if does not have slash - append slash
+	// if does not have slash - append slash
 	hasSlash := strings.HasSuffix(mirrorURL, "/")
 	if !hasSlash {
 		mirrorURL = fmt.Sprintf("%s/", mirrorURL)
@@ -166,14 +183,13 @@ func Install(tfversion string, binPath string, mirrorURL string) {
 	/* set symlink to desired version */
 	CreateSymlink(installFileVersionPath, binPath)
 	fmt.Printf("Switched terraform to version %q \n", tfversion)
-	AddRecent(tfversion) //add to recent file for faster lookup
+	AddRecent(tfversion) // add to recent file for faster lookup
 	os.Exit(0)
 }
 
 // AddRecent : add to recent file
 func AddRecent(requestedVersion string) {
-
-	installLocation = GetInstallLocation() //get installation location -  this is where we will put our terraform binary file
+	installLocation = GetInstallLocation() // get installation location -  this is where we will put our terraform binary file
 	versionFile := filepath.Join(installLocation, recentFile)
 
 	fileExist := CheckFileExist(versionFile)
@@ -215,8 +231,7 @@ func AddRecent(requestedVersion string) {
 
 // GetRecentVersions : get recent version from file
 func GetRecentVersions() ([]string, error) {
-
-	installLocation = GetInstallLocation() //get installation location -  this is where we will put our terraform binary file
+	installLocation = GetInstallLocation() // get installation location -  this is where we will put our terraform binary file
 	versionFile := filepath.Join(installLocation, recentFile)
 
 	fileExist := CheckFileExist(versionFile)
@@ -252,15 +267,14 @@ func GetRecentVersions() ([]string, error) {
 	return nil, nil
 }
 
-//CreateRecentFile : create a recent file
+// CreateRecentFile : create a recent file
 func CreateRecentFile(requestedVersion string) {
-
-	installLocation = GetInstallLocation() //get installation location -  this is where we will put our terraform binary file
+	installLocation = GetInstallLocation() // get installation location -  this is where we will put our terraform binary file
 
 	WriteLines([]string{requestedVersion}, filepath.Join(installLocation, recentFile))
 }
 
-//ConvertExecutableExt : convert excutable with local OS extension
+// ConvertExecutableExt : convert excutable with local OS extension
 func ConvertExecutableExt(fpath string) string {
 	switch runtime.GOOS {
 	case "windows":
@@ -273,36 +287,35 @@ func ConvertExecutableExt(fpath string) string {
 	}
 }
 
-//InstallableBinLocation : Checks if terraform is installable in the location provided by the user.
-//If not, create $HOME/bin. Ask users to add  $HOME/bin to $PATH and return $HOME/bin as install location
+// InstallableBinLocation : Checks if terraform is installable in the location provided by the user.
+// If not, create $HOME/bin. Ask users to add  $HOME/bin to $PATH and return $HOME/bin as install location
 func InstallableBinLocation(userBinPath string) string {
-
 	usr, errCurr := user.Current()
 	if errCurr != nil {
 		log.Fatal(errCurr)
 	}
 
-	binDir := Path(userBinPath)           //get path directory from binary path
-	binPathExist := CheckDirExist(binDir) //the default is /usr/local/bin but users can provide custom bin locations
+	binDir := Path(userBinPath)           // get path directory from binary path
+	binPathExist := CheckDirExist(binDir) // the default is /usr/local/bin but users can provide custom bin locations
 
-	if binPathExist == true { //if bin path exist - check if we can write to to it
+	if binPathExist == true { // if bin path exist - check if we can write to to it
 
-		binPathWritable := false //assume bin path is not writable
+		binPathWritable := false // assume bin path is not writable
 		if runtime.GOOS != "windows" {
-			binPathWritable = CheckDirWritable(binDir) //check if is writable on ( only works on LINUX)
+			binPathWritable = CheckDirWritable(binDir) // check if is writable on ( only works on LINUX)
 		}
 
 		// IF: "/usr/local/bin" or `custom bin path` provided by user is non-writable, (binPathWritable == false), we will attempt to install terraform at the ~/bin location. See ELSE
 		if binPathWritable == false {
 
-			homeBinExist := CheckDirExist(filepath.Join(usr.HomeDir, "bin")) //check to see if ~/bin exist
-			if homeBinExist {                                                //if ~/bin exist, install at ~/bin/terraform
+			homeBinExist := CheckDirExist(filepath.Join(usr.HomeDir, "bin")) // check to see if ~/bin exist
+			if homeBinExist {                                                // if ~/bin exist, install at ~/bin/terraform
 				fmt.Printf("Installing terraform at %s\n", filepath.Join(usr.HomeDir, "bin"))
 				return filepath.Join(usr.HomeDir, "bin", "terraform")
-			} else { //if ~/bin directory does not exist, create ~/bin for terraform installation
+			} else { // if ~/bin directory does not exist, create ~/bin for terraform installation
 				fmt.Printf("Unable to write to: %s\n", userBinPath)
 				fmt.Printf("Creating bin directory at: %s\n", filepath.Join(usr.HomeDir, "bin"))
-				CreateDirIfNotExist(filepath.Join(usr.HomeDir, "bin")) //create ~/bin
+				CreateDirIfNotExist(filepath.Join(usr.HomeDir, "bin")) // create ~/bin
 				fmt.Printf("RUN `export PATH=$PATH:%s` to append bin to $PATH\n", filepath.Join(usr.HomeDir, "bin"))
 				return filepath.Join(usr.HomeDir, "bin", "terraform")
 			}

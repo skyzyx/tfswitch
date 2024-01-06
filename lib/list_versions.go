@@ -1,8 +1,31 @@
+// MIT License
+//
+// Copyright (c) 2018 warrensbox
+// Copyright (c) 2024 Ryan Parman <https://ryanparman.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package lib
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -15,9 +38,8 @@ type tfVersionList struct {
 	tflist []string
 }
 
-//GetTFList :  Get the list of available terraform version given the hashicorp url
+// GetTFList :  Get the list of available terraform version given the hashicorp url
 func GetTFList(mirrorURL string, preRelease bool) ([]string, error) {
-
 	result, error := GetTFURLBody(mirrorURL)
 	if error != nil {
 		return nil, error
@@ -37,7 +59,7 @@ func GetTFList(mirrorURL string, preRelease bool) ([]string, error) {
 	for i := range result {
 		if r.MatchString(result[i]) {
 			str := r.FindString(result[i])
-			trimstr := strings.Trim(str, "/\"") //remove '/' or '"' from /X.X.X/" or /X.X.X"
+			trimstr := strings.Trim(str, "/\"") // remove '/' or '"' from /X.X.X/" or /X.X.X"
 			tfVersionList.tflist = append(tfVersionList.tflist, trimstr)
 		}
 	}
@@ -47,12 +69,10 @@ func GetTFList(mirrorURL string, preRelease bool) ([]string, error) {
 	}
 
 	return tfVersionList.tflist, nil
-
 }
 
-//GetTFLatest :  Get the latest terraform version given the hashicorp url
+// GetTFLatest :  Get the latest terraform version given the hashicorp url
 func GetTFLatest(mirrorURL string) (string, error) {
-
 	result, error := GetTFURLBody(mirrorURL)
 	if error != nil {
 		return "", error
@@ -63,7 +83,7 @@ func GetTFLatest(mirrorURL string) (string, error) {
 	for i := range result {
 		if r.MatchString(result[i]) {
 			str := r.FindString(result[i])
-			trimstr := strings.Trim(str, "/\"") //remove '/' or '"' from /X.X.X/" or /X.X.X"
+			trimstr := strings.Trim(str, "/\"") // remove '/' or '"' from /X.X.X/" or /X.X.X"
 			return trimstr, nil
 		}
 	}
@@ -71,10 +91,10 @@ func GetTFLatest(mirrorURL string) (string, error) {
 	return "", nil
 }
 
-//GetTFLatestImplicit :  Get the latest implicit terraform version given the hashicorp url
+// GetTFLatestImplicit :  Get the latest implicit terraform version given the hashicorp url
 func GetTFLatestImplicit(mirrorURL string, preRelease bool, version string) (string, error) {
 	if preRelease == true {
-		//TODO: use GetTFList() instead of GetTFURLBody
+		// TODO: use GetTFList() instead of GetTFURLBody
 		versions, error := GetTFURLBody(mirrorURL)
 		if error != nil {
 			return "", error
@@ -88,13 +108,13 @@ func GetTFLatestImplicit(mirrorURL string, preRelease bool, version string) (str
 		for i := range versions {
 			if r.MatchString(versions[i]) {
 				str := r.FindString(versions[i])
-				trimstr := strings.Trim(str, "/\"") //remove '/' or '"' from /X.X.X/" or /X.X.X"
+				trimstr := strings.Trim(str, "/\"") // remove '/' or '"' from /X.X.X/" or /X.X.X"
 				return trimstr, nil
 			}
 		}
 	} else if preRelease == false {
 		listAll := false
-		tflist, _ := GetTFList(mirrorURL, listAll) //get list of versions
+		tflist, _ := GetTFList(mirrorURL, listAll) // get list of versions
 		version = fmt.Sprintf("~> %v", version)
 		semv, err := SemVerParser(&version, tflist)
 		if err != nil {
@@ -105,11 +125,10 @@ func GetTFLatestImplicit(mirrorURL string, preRelease bool, version string) (str
 	return "", nil
 }
 
-//GetTFURLBody : Get list of terraform versions from hashicorp releases
+// GetTFURLBody : Get list of terraform versions from hashicorp releases
 func GetTFURLBody(mirrorURL string) ([]string, error) {
-
 	hasSlash := strings.HasSuffix(mirrorURL, "/")
-	if !hasSlash { //if does not have slash - append slash
+	if !hasSlash { // if does not have slash - append slash
 		mirrorURL = fmt.Sprintf("%s/", mirrorURL)
 	}
 	resp, errURL := http.Get(mirrorURL)
@@ -125,7 +144,7 @@ func GetTFURLBody(mirrorURL string) ([]string, error) {
 		os.Exit(1)
 	}
 
-	body, errBody := ioutil.ReadAll(resp.Body)
+	body, errBody := io.ReadAll(resp.Body)
 	if errBody != nil {
 		log.Printf("[Error] : reading body: %v", errBody)
 		os.Exit(1)
@@ -138,9 +157,8 @@ func GetTFURLBody(mirrorURL string) ([]string, error) {
 	return result, nil
 }
 
-//VersionExist : check if requested version exist
+// VersionExist : check if requested version exist
 func VersionExist(val interface{}, array interface{}) (exists bool) {
-
 	exists = false
 	switch reflect.TypeOf(array).Kind() {
 	case reflect.Slice:
@@ -157,7 +175,7 @@ func VersionExist(val interface{}, array interface{}) (exists bool) {
 	return exists
 }
 
-//RemoveDuplicateVersions : remove duplicate version
+// RemoveDuplicateVersions : remove duplicate version
 func RemoveDuplicateVersions(elements []string) []string {
 	// Use map to record duplicates as we find them.
 	encountered := map[string]bool{}
@@ -186,7 +204,6 @@ func RemoveDuplicateVersions(elements []string) []string {
 // For example: 0.1. 2 = invalid
 */
 func ValidVersionFormat(version string) bool {
-
 	// Getting versions from body; should return match /X.X.X-@/ where X is a number,@ is a word character between a-z or A-Z
 	// Follow https://semver.org/spec/v1.0.0-beta.html
 	// Check regular expression at https://rubular.com/r/ju3PxbaSBALpJB
@@ -201,7 +218,6 @@ func ValidVersionFormat(version string) bool {
 // For example: 0.1.2 = invalid
 */
 func ValidMinorVersionFormat(version string) bool {
-
 	// Getting versions from body; should return match /X.X./ where X is a number
 	semverRegex := regexp.MustCompile(`^(\d+\.\d+)$`)
 

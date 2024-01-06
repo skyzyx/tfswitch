@@ -1,3 +1,4 @@
+---
 # Golang CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-go/ for more details
@@ -7,7 +8,7 @@ jobs:
     docker:
       - image: cimg/go:1.18
 
-    working_directory: /home/circleci/go/src/github.com/warrensbox/terraform-switcher
+    working_directory: /home/circleci/go/src/github.com/skyzyx/tfswitch
 
     steps:
       - checkout
@@ -36,7 +37,7 @@ jobs:
     docker:
       - image: cimg/go:1.18
 
-    working_directory: /home/circleci/go/src/github.com/warrensbox/terraform-switcher
+    working_directory: /home/circleci/go/src/github.com/skyzyx/tfswitch
 
     steps:
       - checkout
@@ -73,5 +74,4 @@ workflows:
           filters:
             branches:
               only:
-              - release
-
+                - release

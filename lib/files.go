@@ -1,3 +1,26 @@
+// MIT License
+//
+// Copyright (c) 2018 warrensbox
+// Copyright (c) 2024 Ryan Parman <https://ryanparman.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 package lib
 
 import (
@@ -6,7 +29,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -28,7 +50,6 @@ func RenameFile(src string, dest string) {
 func RemoveFiles(src string) {
 	files, err := filepath.Glob(src)
 	if err != nil {
-
 		panic(err)
 	}
 	for _, f := range files {
@@ -50,7 +71,6 @@ func CheckFileExist(file string) bool {
 // Unzip will decompress a zip archive, moving all files and folders
 // within the zip file (parameter 1) to an output directory (parameter 2).
 func Unzip(src string, dest string) ([]string, error) {
-
 	var filenames []string
 
 	r, err := zip.OpenReader(src)
@@ -72,10 +92,8 @@ func Unzip(src string, dest string) ([]string, error) {
 		filenames = append(filenames, fpath)
 
 		if f.FileInfo().IsDir() {
-
 			// Make Folder
 			os.MkdirAll(fpath, os.ModePerm)
-
 		} else {
 
 			// Make File
@@ -102,11 +120,11 @@ func Unzip(src string, dest string) ([]string, error) {
 	return filenames, nil
 }
 
-//CreateDirIfNotExist : create directory if directory does not exist
+// CreateDirIfNotExist : create directory if directory does not exist
 func CreateDirIfNotExist(dir string) {
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		fmt.Printf("Creating directory for terraform binary at: %v\n", dir)
-		err = os.MkdirAll(dir, 0755)
+		err = os.MkdirAll(dir, 0o755)
 		if err != nil {
 			fmt.Printf("Unable to create directory for terraform binary at: %v", dir)
 			panic(err)
@@ -114,11 +132,9 @@ func CreateDirIfNotExist(dir string) {
 	}
 }
 
-//WriteLines : writes into file
+// WriteLines : writes into file
 func WriteLines(lines []string, path string) (err error) {
-	var (
-		file *os.File
-	)
+	var file *os.File
 
 	if file, err = os.Create(path); err != nil {
 		return err
@@ -166,9 +182,8 @@ func ReadLines(path string) (lines []string, err error) {
 	return
 }
 
-//IsDirEmpty : check if directory is empty (TODO UNIT TEST)
+// IsDirEmpty : check if directory is empty (TODO UNIT TEST)
 func IsDirEmpty(name string) bool {
-
 	exist := false
 
 	f, err := os.Open(name)
@@ -184,15 +199,14 @@ func IsDirEmpty(name string) bool {
 	return exist // Either not empty or error, suits both cases
 }
 
-//CheckDirHasTGBin : // check binary exist (TODO UNIT TEST)
+// CheckDirHasTGBin : // check binary exist (TODO UNIT TEST)
 func CheckDirHasTGBin(dir, prefix string) bool {
-
 	exist := false
 
-	files, err := ioutil.ReadDir(dir)
+	files, err := os.ReadDir(dir)
 	if err != nil {
 		log.Fatal(err)
-		//return exist, err
+		// return exist, err
 	}
 	res := []string{}
 	for _, f := range files {
@@ -204,9 +218,9 @@ func CheckDirHasTGBin(dir, prefix string) bool {
 	return exist
 }
 
-//CheckDirExist : check if directory exist
-//dir=path to file
-//return bool
+// CheckDirExist : check if directory exist
+// dir=path to file
+// return bool
 func CheckDirExist(dir string) bool {
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		return false
@@ -227,8 +241,7 @@ func GetFileName(configfile string) string {
 
 // GetCurrentDirectory : return the current directory
 func GetCurrentDirectory() string {
-
-	dir, err := os.Getwd() //get current directory
+	dir, err := os.Getwd() // get current directory
 	if err != nil {
 		log.Printf("Failed to get current directory %v\n", err)
 		os.Exit(1)
@@ -238,7 +251,6 @@ func GetCurrentDirectory() string {
 
 // GetHomeDirectory : return the home directory
 func GetHomeDirectory() string {
-
 	homedir, errHome := homedir.Dir()
 	if errHome != nil {
 		log.Printf("Failed to get home directory %v\n", errHome)
